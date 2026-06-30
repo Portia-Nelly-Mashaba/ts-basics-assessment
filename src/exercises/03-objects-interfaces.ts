@@ -12,7 +12,11 @@
 // TODO: complete: readonly id:number, name:string, email:string,
 //       phone?:string, status:"active"|"graduated"
 export interface Student {
-  // TODO
+  readonly id: number;
+  name: string;
+  email: string;
+  phone?: string;
+  status: "active" | "graduated";
 }
 
 export const student1: Student = {
@@ -30,8 +34,8 @@ student1.id = 999;
  * Use `extends` — do NOT retype every field. */
 
 // TODO: extend Student
-export interface TutorStudent extends ___ {
-  // TODO: subjects
+export interface TutorStudent extends Student {
+  subjects: string[];
 }
 
 export const tutor1: TutorStudent = {
@@ -47,7 +51,7 @@ export const tutor1: TutorStudent = {
  * e.g. sheet["MOD101"] = 88. Use an index signature. */
 
 // TODO: { [code: string]: number }
-export type ScoreSheet = ___;
+export type ScoreSheet = { [code: string]: number };
 
 export const sheet: ScoreSheet = { MOD101: 88, MOD102: 73 };
 
@@ -58,7 +62,9 @@ export const badSheet: ScoreSheet = { MOD103: "high" };
 
 // TODO: student:Student, course:string, scores:number[]
 export interface Enrolment {
-  // TODO
+  student: Student;
+  course: string;
+  scores: number[];
 }
 
 export const enrolment1: Enrolment = {
