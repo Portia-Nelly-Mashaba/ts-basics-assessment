@@ -11,7 +11,7 @@
 /* ---- 2a. Literal union ---- */
 
 // TODO: union of "pending" | "graded" | "late"
-export type SubmissionStatus = ___;
+export type SubmissionStatus = "pending" | "graded" | "late";
 export const ok: SubmissionStatus = "graded";
 
 // @ts-expect-error "missing" is not a valid SubmissionStatus
@@ -22,7 +22,11 @@ export const bad: SubmissionStatus = "missing";
 
 // TODO: declare the real enum (delete PLACEHOLDER)
 export enum Grade {
-  PLACEHOLDER,
+  A,
+  B,
+  C,
+  D,
+  F,
 }
 export const passingGrade: Grade = Grade.B;
 
@@ -35,8 +39,11 @@ export const passingGrade: Grade = Grade.B;
 const pad = (n: number): string => "STU-" + n.toString().padStart(4, "0");
 
 // TODO: param union type, return type, and narrowing in the body
-export function formatId(id: ___): ___ {
-  // TODO
+export function formatId(id: number | string): string {
+  if (typeof id === "number") {
+    return pad(id);
+  }
+  return id.toUpperCase();
 }
 
 /* ---- 2d. Narrowing where typeof is NOT enough ----
@@ -55,11 +62,19 @@ export function formatId(id: ___): ___ {
  */
 
 // TODO: define Mark, Letter, Entry
-export type Mark = ___;
-export type Letter = ___;
-export type Entry = ___;
+export type Mark = { kind: "mark"; value: number };
+export type Letter = { kind: "letter"; value: "A" | "B" | "C" | "D" | "F" };
+export type Entry = Mark | Letter;
 
 // TODO: implement using discriminant narrowing on `kind`
 export function toLetter(entry: Entry): "A" | "B" | "C" | "D" | "F" {
-  // TODO
+  if (entry.kind === "letter") {
+    return entry.value;
+  }
+  const mark = entry.value;
+  if (mark >= 75) return "A";
+  if (mark >= 70) return "B";
+  if (mark >= 60) return "C";
+  if (mark >= 50) return "D";
+  return "F";
 }
