@@ -12,9 +12,9 @@
 /* ---- 1a. Annotate. Pick the NARROWEST correct type. ---- */
 
 // TODO: type these three
-export const courseName: ___ = "Full Stack Development";
-export const totalModules: ___ = 12;
-export const isEnrolled: ___ = true;
+export const courseName: string = "Full Stack Development";
+export const totalModules: number = 12;
+export const isEnrolled: boolean = true;
 
 /* ---- 1b. Inference vs annotation ----
  * Leave `inferredScore` un-annotated. `frozenScore` uses `as const`. */
@@ -31,10 +31,10 @@ export { inferredScore, frozenScore };
  * `FIXED_WEIGHTS` must be IMMUTABLE — `.push()` on it must be a
  * compile error. Use a readonly array type. */
 
-export const moduleScores: ___ = [88, 73, 95, 60];
+export const moduleScores: number[] = [88, 73, 95, 60];
 
 // TODO: type so that mutation is rejected
-export const FIXED_WEIGHTS: ___ = [0.2, 0.3, 0.5];
+export const FIXED_WEIGHTS: readonly number[] = [0.2, 0.3, 0.5];
 
 // This MUST error once FIXED_WEIGHTS is readonly. Keep the directive.
 // @ts-expect-error cannot push onto a readonly array
@@ -46,11 +46,11 @@ FIXED_WEIGHTS.push(0.1);
  * (number...). Use a rest element. */
 
 // TODO: tuple [string, number]
-export type StudentRecord = ___;
+export type StudentRecord = [string, number];
 export const topStudent: StudentRecord = ["Lerato", 95];
 
 // TODO: tuple [string, ...number[]]
-export type GradedRow = ___;
+export type GradedRow = [string, ...number[]];
 export const row1: GradedRow = ["Thabo", 60, 75, 80];
 export const row2: GradedRow = ["Sipho"]; // zero marks allowed
 
