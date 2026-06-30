@@ -11,8 +11,11 @@
  * ============================================================ */
 
 // BUG: maps a student name (string) to their final mark (number).
-export function buildReport(names: any, marks: any): any {
-  const report: any = {};
+export function buildReport(
+  names: string[],
+  marks: number[]
+): Record<string, number> {
+  const report: Record<string, number> = {};
   for (let i = 0; i < names.length; i++) {
     report[names[i]] = marks[i];
   }
@@ -21,22 +24,28 @@ export function buildReport(names: any, marks: any): any {
 
 // BUG: should return only PASSING marks. Pass is >= 50.
 // Type the parameter and fix the predicate.
-export function passingMarks(marks: any) {
-  return marks.filter((m: any) => m > 50);
+export function passingMarks(marks: number[]): number[] {
+  return marks.filter((m) => m >= 50);
 }
 
 // BUG: untyped `student` hides the typo `naem`. Type it so the
 // compiler flags the typo, then fix it.
-export function describe(student: any): string {
-  return `${student.naem} scored ${student.mark}`;
+interface StudentInfo {
+  name: string;
+  mark: number;
+}
+
+export function describe(student: StudentInfo): string {
+  return `${student.name} scored ${student.mark}`;
 }
 
 // BUG: this is meant to return the HIGHEST mark in the list, but it
 // has an initialisation bug that wrong typing hides. Type `marks` as
 // number[], return a number, and fix the logic so highest([3,9,4])===9
 // and highest([]) === 0.
-export function highest(marks: any): any {
-  let max;
+export function highest(marks: number[]): number {
+  if (marks.length === 0) return 0;
+  let max = marks[0];
   for (const m of marks) {
     if (m > max) max = m;
   }
@@ -48,6 +57,9 @@ export function highest(marks: any): any {
 // null case. Type `sheet` as Record<string, number>, and the return
 // as `number | null`. Fix the body so a missing key returns null
 // (note: a present score of 0 must NOT be treated as missing).
-export function lookup(sheet: any, code: any): any {
-  return sheet[code] || null;
+export function lookup(sheet: Record<string, number>, code: string): number | null {
+  if (code in sheet) {
+    return sheet[code];
+  }
+  return null;
 }
