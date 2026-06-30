@@ -29,10 +29,19 @@
  */
 
 // TODO: define StudentRow
-export type StudentRow = ___;
+export type StudentRow = {
+  id: number;
+  name: string;
+  email?: string;
+  enrolment: "full-time" | "part-time";
+  marks: number[];
+};
 
-// TODO: define ClassRoster
-export type ClassRoster = ___;
+export type ClassRoster = {
+  courseCode: string;
+  term: "2026-S1" | "2026-S2";
+  students: StudentRow[];
+};
 
 /* ---- 10b. The data (do not change it). It must satisfy your types. */
 export const roster: ClassRoster = {
@@ -50,21 +59,32 @@ export const roster: ClassRoster = {
 // Returns each student's average mark (0 if they have no marks),
 // as an array of { name: string; average: number }, in roster order.
 // TODO: type the return as { name: string; average: number }[]
-export function classAverages(r: ClassRoster): ___ {
-  // TODO
+export function classAverages(
+  r: ClassRoster
+): { name: string; average: number }[] {
+  return r.students.map((student) => {
+    const average =
+      student.marks.length === 0
+        ? 0
+        : student.marks.reduce((sum, m) => sum + m, 0) / student.marks.length;
+    return { name: student.name, average };
+  });
 }
 
 // Returns the names of students who are part-time. The return type
 // must be string[].
-// TODO
-export function partTimeNames(r: ClassRoster): ___ {
-  // TODO
+export function partTimeNames(r: ClassRoster): string[] {
+  return r.students
+    .filter((s) => s.enrolment === "part-time")
+    .map((s) => s.name);
 }
 
 // Returns the email if present, otherwise the string "no-email".
 // `student` is a StudentRow. Handle the optional field with narrowing
 // (do NOT use `!`).
-// TODO
 export function emailOrFallback(student: StudentRow): string {
-  // TODO
+  if (student.email !== undefined) {
+    return student.email;
+  }
+  return "no-email";
 }
