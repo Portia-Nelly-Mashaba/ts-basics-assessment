@@ -16,7 +16,7 @@ import type { Student } from "./03-objects-interfaces.ts";
  * Use a rest parameter typed as numbers. */
 
 // TODO: rest param of numbers, returns number
-export function average(...scores: ___): ___ {
+export function average(...scores: number[]): number {
   if (scores.length === 0) return 0;
   return scores.reduce((sum, n) => sum + n, 0) / scores.length;
 }
@@ -24,24 +24,24 @@ export function average(...scores: ___): ___ {
 /* ---- 4b. Optional + default param ---- */
 
 // TODO: greeting defaults to "Hello"; returns string
-export function greet(student: Student, greeting: ___ = "Hello"): ___ {
+export function greet(student: Student, greeting: string = "Hello"): string {
   return `${greeting}, ${student.name}`;
 }
 
 /* ---- 4c. void ---- */
 
 // TODO: return type
-export function logResult(message: string): ___ {
+export function logResult(message: string): void {
   console.log(`[RESULT] ${message}`);
 }
 
 /* ---- 4d. Function-type alias + implementation ---- */
 
 // TODO: (score: number) => number
-export type ScoreTransformer = ___;
+export type ScoreTransformer = (score: number) => number;
 
 // TODO: annotate with ScoreTransformer
-export const curveUp: ___ = (score) => Math.min(score + 5, 100);
+export const curveUp: ScoreTransformer = (score) => Math.min(score + 5, 100);
 
 /* ---- 4e. Object with a call signature ----
  * `Validator` is an object you can CALL like `validator(85)` to get a
@@ -56,8 +56,12 @@ export const curveUp: ___ = (score) => Math.min(score + 5, 100);
 
 // TODO: define the Validator interface with a call signature
 export interface Validator {
-  // TODO
+  (mark: number): boolean;
+  label: string;
 }
 
 // TODO: implement and attach the label
-export const passValidator: Validator = ___;
+export const passValidator: Validator = Object.assign(
+  (mark: number) => mark >= 50,
+  { label: "pass>=50" }
+);
