@@ -20,11 +20,15 @@ import type { ReactNode } from "react";
 
 // TODO: complete the props type
 type StudentCardProps = {
-  // TODO
+  name: string;
+  mark: number;
+  status: "active" | "graduated";
+  note?: string;
+  onSelect: (name: string) => void;
 };
 
 // TODO: annotate props
-export function StudentCard(props: ___) {
+export function StudentCard(props: StudentCardProps) {
   const { name, mark, status, note, onSelect } = props;
   return (
     <div
@@ -45,11 +49,12 @@ export function StudentCard(props: ___) {
 
 // TODO: heading:string, children:ReactNode
 type PanelProps = {
-  // TODO
+  heading: string;
+  children: ReactNode;
 };
 
 // TODO: annotate props
-export function Panel(props: ___) {
+export function Panel(props: PanelProps) {
   return (
     <section style={{ padding: 16 }}>
       <h2>{props.heading}</h2>
