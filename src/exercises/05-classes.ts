@@ -13,7 +13,7 @@
 
 // TODO: declare the interface with an average(): number method
 export interface Averageable {
-  // TODO
+  average(): number;
 }
 
 /* ---- 5b. Abstract base ----
@@ -24,23 +24,23 @@ export interface Averageable {
  * concrete `total(): number` = sum of scores. */
 
 export abstract class Assessment implements Averageable {
-  // TODO: public readonly title: string
-  // TODO: protected scores: number[]
+  public readonly title: string;
+  protected scores: number[];
 
-  // TODO: constructor(title: string, scores: number[])
-  constructor(title: ___, scores: ___) {
-    // TODO: assign both
+  constructor(title: string, scores: number[]) {
+    this.title = title;
+    this.scores = scores;
   }
 
-  // TODO: abstract weight(): number  (no body)
+  abstract weight(): number;
 
   total(): number {
     return this.scores.reduce((s, n) => s + n, 0);
   }
 
-  // TODO: implement average(): number from Averageable (0 if empty)
   average(): number {
-    // TODO
+    if (this.scores.length === 0) return 0;
+    return this.total() / this.scores.length;
   }
 }
 
@@ -49,11 +49,12 @@ export abstract class Assessment implements Averageable {
  * It exposes a getter `weighted` = average() * weight(). */
 
 export class Exam extends Assessment {
-  // TODO: implement weight() returning 0.6
+  weight(): number {
+    return 0.6;
+  }
 
-  // TODO: getter `weighted` returning a number
-  get weighted(): ___ {
-    // TODO
+  get weighted(): number {
+    return this.average() * this.weight();
   }
 }
 
