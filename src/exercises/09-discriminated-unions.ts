@@ -17,10 +17,10 @@
  */
 
 // TODO: define each member, then the union `Notification`
-export type EmailNote = ___;
-export type SmsNote = ___;
-export type PushNote = ___;
-export type Notification = ___;
+export type EmailNote = { type: "email"; address: string };
+export type SmsNote = { type: "sms"; phone: string };
+export type PushNote = { type: "push"; deviceId: string; badge: number };
+export type Notification = EmailNote | SmsNote | PushNote;
 
 /* ---- 9b. Exhaustive handler ----
  * `describe` returns a human string for each notification type.
@@ -37,13 +37,14 @@ export type Notification = ___;
 
 export function describe(n: Notification): string {
   switch (n.type) {
-    // TODO: case "email": ...
-    // TODO: case "sms": ...
-    // TODO: case "push": ...
+    case "email":
+      return `Email to ${n.address}`;
+    case "sms":
+      return `SMS to ${n.phone}`;
+    case "push":
+      return `Push to ${n.deviceId} (badge ${n.badge})`;
     default: {
-      // TODO: exhaustiveness check — assign `n` to a const of type
-      // `never`, then throw. If a case is missing this line errors.
-      const _exhaustive: ___ = n;
+      const _exhaustive: never = n;
       throw new Error(`Unhandled notification: ${_exhaustive}`);
     }
   }
